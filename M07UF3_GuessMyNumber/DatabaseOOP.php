@@ -31,12 +31,10 @@ class DatabaseOOP extends DatabaseConnection {
 
      function insert($modalitat, $nivell, $intents): int {
         try {
-            // prepare sql and bind parameters
-            $mysqli = "INSERT INTO `estadistiques` (`modalitat`, `nivell`, `intents`) VALUES ('$modalitat' ,'$nivell', '$intents')";
-                if ($this->connection != null) {
+            $mysqli = "INSERT INTO `estadistiques` (modalitat, nivell, intents) VALUES ('$modalitat' ,'$nivell', '$intents')";
+            if ($this->connection != null) {
                      if ($this->connection->query($mysqli) === TRUE) {
-                        $mysqli = "SELECT max(id) FROM estadistiques";
-                        return mysqli_fetch_all($this->connection->query($mysqli));
+                        return $this->connection->insert_id;
                  } else {
                      return -1;
               }

@@ -28,7 +28,7 @@ class DatabaseProc extends DatabaseConnection {
     }
 
     public function insert($modalitat, $nivell, $intents): int {
-        $sql = "INSERT INTO estadistiques (modalitat, nivell, intents) VALUES ('$modalitat', $nivell, $intents)";
+        $sql = "INSERT INTO estadistiques (modalitat, nivell, intents) VALUES ('$modalitat', '$nivell', '$intents')";
         if ($this->connection != null) {
             if (mysqli_query($this->connection, $sql)) {
                 return mysqli_insert_id($this->connection);

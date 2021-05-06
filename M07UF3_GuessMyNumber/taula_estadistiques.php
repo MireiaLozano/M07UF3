@@ -25,5 +25,5 @@
         } catch (Exception $error) {
             echo "connection failed: " . $error->getMessage();
         }
-        DatabasePDO::TABLE_END
+     DatabaseOOP::TABLE_END;
 ?>

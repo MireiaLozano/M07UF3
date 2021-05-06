@@ -1,7 +1,7 @@
 <?php
     require('guessMyNumber.php');
     class GamePrimeraModalidad extends GuessMyNumber {
-
+      
       function numeroMasPequeño() {
         $_SESSION['rangoMedio'] = ceil((min(1,$_SESSION['rangoMedio']) + max(1,$_SESSION['rangoMedio']))/2);
       }
@@ -17,7 +17,7 @@
       }
 
     }
-
+    
     $_SESSION['posibilidad'] = $_POST['posibilidad'];
     $dificultad = $_SESSION['posibilidad'];
     $primeraModalidad = new GamePrimeraModalidad($dificultad);
@@ -47,34 +47,38 @@
           <button type="submit" id="numeroMasGrande" name="numeroMasGrande" class="button">Més gran</button>
 
           <?php
+          include_once 'DatabaseOOP.php';
+          include_once 'EstadistiquesRow.php';
             $primeraModalidad->check_intentos();
-            if ( isset($_POST['numeroIgual'])) {
+          if ( isset($_POST['numeroIgual'])) {
               $primeraModalidad->sumar_intentos();
               echo "<br> Has acertado el número, enhorabuena. <br>";
               echo "Intentos: " . $_SESSION['intentos'] . "<br>";
               //Quan encerta el número posarem a sota la taula estadístiques perquè es 
               //vegi el registre després d'haver encertat
-                    include_once 'DatabaseOOP.php';
-                    include_once 'EstadistiquesRow.php';
                     $db = null;
                     try {
                         //echo "<h1>PHP MySQL</h1>";
                         //echo "<h2>Inserció</h2>";
                         $db = new DatabaseOOP("localhost:3306", "mireia", "mireia", "m07uf3");
                         $db->connect();
+                        $db->insert(ModalitatEnum::HUMA, $_SESSION['posibilidad'], $_SESSION['intentos']);
                         echo "<p>Connected successfully</p>";   
-                        //$last_record = $db->insert(ModalitatEnum::HUMA, 1, 5);
-                        //echo "<p>Registre $last_record inserit correctament</p>";
+                        //$last_record = $db->insert(numeroIgual);
+                        echo "<p>Registre inserit correctament</p>";
                         echo "<h2>Estadístiques</h2>";
                         echo DatabaseOOP::TABLE_START;
-                        $mysqli = $db->selectAll();
                         
+                        $mysqli = "select * from estadistiques";
+                        $mysqli = $db->selectAll();
+
                         foreach (new EstadistiquesRow(new RecursiveArrayIterator(mysqli_fetch_all($mysqli))) as $key => $row) {
                             echo $row;
-                        }  
+                        } 
                     } catch (Exception $error) {
                         echo "connection failed: " . $error->getMessage();
-                    }      
+                    } 
+                    DatabaseOOP::TABLE_END;     
             } 
             elseif ( isset($_POST['numeroMasGrande']) ) {
               $primeraModalidad->sumar_intentos();
@@ -89,6 +93,7 @@
             } elseif ( $_SESSION['rangoMedio'] <= 0) {
               $_SESSION['rangoMedio'] = 1;
             }
+          
           ?>
       </form>
       <form action="" method="POST">

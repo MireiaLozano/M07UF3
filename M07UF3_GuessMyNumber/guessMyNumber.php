@@ -14,7 +14,7 @@
     function get_dificultad() {
       return $this->dificultad;
     }
-
+    
     function check_intentos() {
       if (!isset($_SESSION['intentos'])) { 
         $_SESSION['intentos'] = 0;

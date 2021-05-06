@@ -54,9 +54,9 @@
         <br/>
         <label for="posibilidad" class="label">Selecciona el nivell de dificultat:</label>
         <select id="posibilidad" name="posibilidad" size="1">
-            <option value="10">De l'1 al 10</option>
-            <option value="50">Del l'1 al 50</option>
-            <option value="100">Del l'1 al 100</option>
+            <option id="1" value="10">De l'1 al 10</option>
+            <option id="2" value="50">Del l'1 al 50</option>
+            <option id="3" value="100">Del l'1 al 100</option>
         </select> 
         <br />
         <br />
